@@ -1,49 +1,14 @@
-# Example configuration shared by all `odt` subcommands.
-#
-# - Top-level keys are shared by every command (only the ones a command knows are read).
-# - Each command reads its own section; `gen-addon-readme` reads `addon_readme`.
-# - Every value is optional. "" (or an empty list) means "not set".
-# - Precedence: built-in defaults < this file < command line options.
-# - Relative paths are resolved against the folder of this file.
-#
-# Usage:  odt gen-addon-readme (picks up ./.odt.yaml automatically)
-#         odt --config path/.odt.yaml gen-addon-readme
-
-# ---- shared keys ------------------------------------------------------------
-repo_url: ""            # e.g. https://github.com/acme/my-addons (default: git remote 'origin')
-provider: ""            # github | gitlab | bitbucket | gitea; only for self-hosted servers
-                        # whose hostname does not reveal it (default: guessed from repo_url)
-branch: ""              # branch used in links (default: git branch, else derived from the
-                        # manifest version, e.g. 16.0.1.0.0 -> 16.0)
-default_branch: ""      # main branch used by target "internal" (default: detected main/master)
-prefix_image_url: ""    # only for target "custom"; prepended to relative image paths
-                        # placeholders: {addon_name} {branch} {org_name} {repo_name} {repo_url}
-extra_badges: []        # extra README badges, placeholders allowed, e.g.
-                        # - image: https://img.shields.io/badge/docs-online-blue.png
-                        #   target: https://docs.example.com/{addon_name}
-                        #   alt: Docs
-
-# ---- odt gen-addon-readme ---------------------------------------------------
-# `addon_readme` is a mapping, or a list of mappings (one run per entry).
-# Keep every option indented under the "- ": a key placed at the top level is NOT
-# part of the entry and is silently ignored.
+repo_url: "https://gitlab.com/trans-fnb/odoo/odoo19c-fnb-pos"
+provider: "gitlab"
+branch: "master"
+extra_badges: []
 addon_readme:
-  - addons_dir: "."                 # folder containing many addons
-    addon_dirs: []                  # and/or individual addon folders
-    target: ""                      # internal | repo | custom
-                                    # ("" = custom if prefix_image_url is set, else internal)
-    template_file_name: ""          # custom Jinja2 template ("" = built-in)
-    fragments_dir: readme           # folder with the fragments inside each addon
-    gen_html: true                  # also write static/description/index.html
-    check_rst: true                 # validate the generated RST with docutils
-    keep_source_digest: false       # keep the digest already in README.rst
-    if_source_changed: false        # skip addons whose sources did not change
-    convert_fragments_to_markdown: false   # convert .rst fragments to .md (needs pypandoc)
-    # Options of the shared keys above can be overridden for this entry only:
-    # repo_url: https://github.com/acme/other-addons
-    # target: repo
-
-  # A second run with different settings:
-  # - addon_dirs: [./special_addon]
-  #   target: custom
-  #   prefix_image_url: https://cdn.example.com/{addon_name}/
+  - addons_dir: "/home/killua/dev/odoo19c-fnb-pos/odoo/addons_pos"
+    addon_dirs: []
+    target: "internal"
+    fragments_dir: readme
+    gen_html: true
+    check_rst: true
+    keep_source_digest: false
+    if_source_changed: false
+    convert_fragments_to_markdown: false

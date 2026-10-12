@@ -174,7 +174,6 @@ def render_readme(
 
 
 def check_rst(text: str) -> None:
-    """Raise if docutils reports any warning/error."""
     publish_string(
         source=text, writer_name="html4css1", settings_overrides=RST2HTML_SETTINGS
     )
@@ -240,8 +239,7 @@ def run(
             )
             readme = Path(addon_dir) / "README.rst"
             extra = json.dumps(
-                [template_hash, image_prefix, repo.url, repo.branch,
-                 settings.extra_badges],
+                [template_hash, image_prefix, repo.url, repo.branch, settings.extra_badges],
                 sort_keys=True,
             )
             digest = compute_digest(
